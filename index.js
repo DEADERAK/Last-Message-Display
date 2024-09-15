@@ -1,38 +1,15 @@
-// 引入必要的模块
-import { getContext } from "../../../extensions.js";
+// 插件的核心脚本
 
-// 扩展名称和路径
-const extensionName = "lastMessageDisplay";
-const extensionFolderPath = `scripts/extensions/third-party/${extensionName}`;
-
-// 初始化插件
-async function initLastMessageDisplay() {
-    // 加载HTML并将其添加到界面中
+// 插件初始化
+async function initVerticalRectangleDisplay() {
+    // 加载 HTML 文件并添加到页面中
     const settingsHtml = await $.get(`${extensionFolderPath}/example.html`);
-    $("#extensions_settings").append(settingsHtml);
+    $("body").append(settingsHtml); // 插入到页面主体
 
-    // 监听新消息的添加事件
-    eventSource.on(event_types.MESSAGE_ADDED, updateLastMessage);
+    console.log("竖直长方形插件已加载！");
 }
 
-// 更新左侧消息内容
-function updateLastMessage() {
-    const context = getContext();
-    const chat = context.chat;
-
-    // 检查是否有消息，并获取最后一条
-    if (chat && chat.length > 0) {
-        const lastMessage = chat[chat.length - 1].mes; // 获取最后一条消息的内容
-
-        // 更新左侧容器的内容
-        const messageContentElement = document.getElementById("last-message-content");
-        if (messageContentElement) {
-            messageContentElement.innerText = lastMessage;
-        }
-    }
-}
-
-// 插件加载时调用初始化
+// 插件加载时调用初始化函数
 jQuery(async () => {
-    await initLastMessageDisplay();
+    await initVerticalRectangleDisplay();
 });
